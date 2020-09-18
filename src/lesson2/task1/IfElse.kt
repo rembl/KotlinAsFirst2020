@@ -132,9 +132,9 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int = when {
-    kingX != rookX && kingY != rookY && (bishopY - kingY != kingX - bishopX && bishopY - kingY != -(kingX - bishopX)) -> 0
-    (kingX == rookX || kingY == rookY) && (bishopY - kingY != kingX - bishopX && bishopY - kingY != -(kingX - bishopX)) -> 1
-    kingX != rookX && kingY != rookY && (bishopY - kingY == kingX - bishopX || bishopY - kingY == -(kingX - bishopX)) -> 2
+    kingX != rookX && kingY != rookY && (kotlin.math.abs(bishopY - kingY) != kotlin.math.abs(kingX - bishopX)) -> 0
+    (kingX == rookX || kingY == rookY) && (kotlin.math.abs(bishopY - kingY) != kotlin.math.abs(kingX - bishopX)) -> 1
+    kingX != rookX && kingY != rookY && (kotlin.math.abs(bishopY - kingY) == kotlin.math.abs(kingX - bishopX)) -> 2
     else -> 3
 }
 
