@@ -20,9 +20,8 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
-fun isNumberHappy(number: Int): Boolean = when {
-    number % 10 + (number % 100) / 10 == number / 1000 + (number / 100) % 10 -> true
-    else -> false
+fun isNumberHappy(number: Int): Boolean {
+    return number % 10 + (number % 100) / 10 == number / 1000 + (number / 100) % 10
 }
 
 /**
@@ -32,9 +31,8 @@ fun isNumberHappy(number: Int): Boolean = when {
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = when {
-    x1 == x2 || y1 == y2 || kotlin.math.abs(x1 - x2) == kotlin.math.abs(y2 - y1) -> true
-    else -> false
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
+   return x1 == x2 || y1 == y2 || kotlin.math.abs(x1 - x2) == kotlin.math.abs(y2 - y1)
 }
 
 
@@ -45,15 +43,9 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = when {
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int = when {
-    (year % 4 != 0 || year % 100 == 0 && year % 400 != 0) &&
-            (month != 2 && (month % 2 != 0 && month < 8) || (month % 2 == 0 && month > 7)) -> 31
-    (year % 4 != 0 || year % 100 == 0 && year % 400 != 0) &&
-            (month != 2 && (month % 2 == 0 && month < 8) || (month % 2 != 0 && month > 7)) -> 30
+    (month != 2 && (month % 2 != 0 && month < 8) || (month % 2 == 0 && month > 7)) -> 31
+    (month != 2 && (month % 2 == 0 && month < 8) || (month % 2 != 0 && month > 7)) -> 30
     (year % 4 != 0 || year % 100 == 0 && year % 400 != 0) && month == 2 -> 28
-    (year % 4 == 0 || (year % 100 != 0 || year % 400 == 0)) &&
-            (month != 2 && (month % 2 != 0 && month < 8) || (month % 2 == 0 && month > 7)) -> 31
-    (year % 4 == 0 || (year % 100 != 0 || year % 400 == 0)) &&
-            (month != 2 && (month % 2 == 0 && month < 8) || (month % 2 != 0 && month > 7)) -> 31
     else -> 29
 }
 
@@ -70,8 +62,7 @@ fun circleInside(
     x2: Double, y2: Double, r2: Double
 ): Boolean {
     val s = sqrt((x2 - x1).pow(2.0) + (y2 - y1).pow(2.0))
-    if (r1 + s <= r2) return true
-    else return false
+    return (r1 + s <= r2)
 }
 
 /**
@@ -83,12 +74,11 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = when {
-    a <= r && b <= s ||
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+   return a <= r && b <= s ||
             a <= s && b <= r ||
             a <= r && c <= s ||
             a <= s && c <= r ||
             b <= r && c <= s ||
-            b <= s && c <= r -> true
-    else -> false
+            b <= s && c <= r
 }
