@@ -112,11 +112,15 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = when {
-    kingX != rookX1 && kingX != rookX2 && kingY != rookY1 && kingY != rookY2 -> 0
-    kingX != rookX2 && kingY != rookY2 && (kingX == rookX1 || kingY == rookY1) -> 1
-    kingX != rookX1 && kingY != rookY1 && (kingX == rookX2 || kingY == rookY2) -> 2
-    else -> 3
+): Int {
+    val rook1: Boolean = kingX == rookX1 || kingY == rookY1
+    val rook2: Boolean = kingX == rookX2 || kingY == rookY2
+    return when {
+        !rook1 && !rook2 -> 0
+        rook1 && !rook2 -> 1
+        !rook1 && rook2 -> 2
+        else -> 3
+    }
 }
 
 /**
@@ -133,11 +137,15 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int = when {
-    kingX != rookX && kingY != rookY && (kotlin.math.abs(bishopY - kingY) != kotlin.math.abs(kingX - bishopX)) -> 0
-    (kingX == rookX || kingY == rookY) && (kotlin.math.abs(bishopY - kingY) != kotlin.math.abs(kingX - bishopX)) -> 1
-    kingX != rookX && kingY != rookY && (kotlin.math.abs(bishopY - kingY) == kotlin.math.abs(kingX - bishopX)) -> 2
-    else -> 3
+): Int {
+    val rook: Boolean = kingX == rookX || kingY == rookY
+    val bishop: Boolean = abs(bishopY - kingY) == abs(kingX - bishopX)
+    return when {
+        !rook && !bishop -> 0
+        rook && !bishop -> 1
+        !rook && bishop -> 2
+        else -> 3
+    }
 }
 
 /**
@@ -152,11 +160,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val longSide: Double = max(max(a, b), c)
     val smallSide: Double = min(min(a, b), c)
     val mediumSide: Double = a + b + c - longSide - smallSide
-    if (longSide > smallSide + mediumSide) return -1
-    else if (longSide.pow(2) < smallSide.pow(2) + mediumSide.pow(2)) return 0
-    else if (longSide.pow(2) == smallSide.pow(2) + mediumSide.pow(2)) return 1
-    else return 2
-
+    return when {
+        (longSide > smallSide + mediumSide) -> -1
+        (longSide.pow(2) < smallSide.pow(2) + mediumSide.pow(2)) -> 0
+        (longSide.pow(2) == smallSide.pow(2) + mediumSide.pow(2)) -> 1
+        else -> 2
+    }
 }
 
 /**
@@ -168,7 +177,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = when {
-    b < c || d < a  -> -1
+    b < c || d < a -> -1
     a <= c && d <= b -> d - c
     c <= a && b <= d -> b - a
     a <= c && b <= d -> b - c
