@@ -5,6 +5,7 @@ package lesson3.task1
 import lesson1.task1.sqr
 import kotlin.math.pow
 import kotlin.math.sqrt
+import kotlin.math.abs
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -78,9 +79,9 @@ fun digitNumber(n: Int): Int {
     var count = 0
     var number = n
     do {
-        count ++
+        count++
         number /= 10
-    } while (kotlin.math.abs(number) > 0)
+    } while (abs(number) > 0)
     return count
 }
 
@@ -97,7 +98,7 @@ fun fib(n: Int): Int {
     var i = 2
     if (n == 1 || n == 2) return 1
     else while (i != n) {
-        i ++
+        i++
         third = first + second
         first = second
         second = third
@@ -124,7 +125,7 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var i = n-1
+    var i = n / 2
     while (n % i != 0) {
         i--
     }
@@ -240,7 +241,7 @@ fun squareSequenceDigit(n: Int): Int {
     var number = 0
     var count = 0
     while (count < n) {
-        number ++
+        number++
         count += digitNumber(sqr(number))
     }
     val result = sqr(number) / 10.0.pow(count - n) % 10
@@ -260,7 +261,7 @@ fun fibSequenceDigit(n: Int): Int {
     var number = 0
     var count = 0
     while (count < n) {
-        number ++
+        number++
         count += digitNumber(fib(number))
     }
     val result = fib(number) / 10.0.pow(count - n) % 10
