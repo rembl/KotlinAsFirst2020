@@ -97,7 +97,7 @@ fun fib(n: Int): Int {
     var third = 0
     var i = 2
     if (n == 1 || n == 2) return 1
-    else while (i != n) {
+    while (i != n) {
         i++
         third = first + second
         first = second
