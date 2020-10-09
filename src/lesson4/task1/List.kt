@@ -320,6 +320,8 @@ fun russian(n: Int): String {
             third[n / 100_000] + second[(n / 10_000) % 10] + firstf[(n / 1000) % 10] + thousand[1] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
         else if ((n / 10_000) % 10 == 1 && (n / 1000) % 10 != 0 && (n / 10) % 10 != 1) result =
             third[n / 100_000] + firstm[(n / 1000) % 100] + thousand[2] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
+        else if ((n / 1000) % 100 == 10 && (n / 10) % 10 != 1) result =
+            third[n / 100_000] + firstm[10] + thousand[2] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
         else if ((n / 10) % 10 != 1) result =
             third[n / 100_000] + second[(n / 10_000) % 10] + firstm[(n / 1000) % 10] + thousand[2] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
         else if ((n / 1000) % 10 == 1 && (n / 10_000) % 10 != 1) result =
@@ -328,6 +330,8 @@ fun russian(n: Int): String {
             third[n / 100_000] + second[(n / 10_000) % 10] + firstf[(n / 1000) % 10] + thousand[1] + third[(n / 100) % 10] + firstm[n % 100]
         else if ((n / 10_000) % 10 == 1 && (n / 1000) % 10 != 0) result =
             third[n / 100_000] + firstm[(n / 1000) % 100] + thousand[2] + third[(n / 100) % 10] + firstm[n % 100]
+        else if ((n / 1000) % 100 == 10) result =
+            third[n / 100_000] + second[10] + thousand[2] + third[(n / 100) % 10] + firstm[n % 100]
         else result =
             third[n / 100_000] + second[(n / 10_000) % 10] + firstm[(n / 1000) % 10] + thousand[2] + third[(n / 100) % 10] + firstm[n % 100]
     } else if (n / 10_000 != 0) {
