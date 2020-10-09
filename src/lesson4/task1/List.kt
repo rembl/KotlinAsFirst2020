@@ -262,32 +262,104 @@ fun roman(n: Int): String {
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    var result: String = ""
+    var result = ""
     val firstf = listOf("", " одна", " две", " три", " четыре")
-    val firstm = listOf("", " один", " два", " три", " четыре", " пять",  " шесть", " семь", " восемь", " девять", " десять",
-        " одиннадцать", " двенадцать", " тринадцать", " четырнадцать", " пятнадцать", " шестнадцать", " семнадцать", " восемнадцать", " девятнадцать")
-    val second = listOf("", "", " двадцать", " тридцать", " сорок", " пятьдесят", " шестьдесят", " семьдесят", " восемьдесят", " девяносто")
-    val third = listOf("", " сто", " двести", " триста", " четыреста", " пятьсот", " шестьсот", " семьсот", " восемьсот", " девятьсот")
+    val firstm = listOf(
+        "",
+        " один",
+        " два",
+        " три",
+        " четыре",
+        " пять",
+        " шесть",
+        " семь",
+        " восемь",
+        " девять",
+        " десять",
+        " одиннадцать",
+        " двенадцать",
+        " тринадцать",
+        " четырнадцать",
+        " пятнадцать",
+        " шестнадцать",
+        " семнадцать",
+        " восемнадцать",
+        " девятнадцать"
+    )
+    val second = listOf(
+        "",
+        "",
+        " двадцать",
+        " тридцать",
+        " сорок",
+        " пятьдесят",
+        " шестьдесят",
+        " семьдесят",
+        " восемьдесят",
+        " девяносто"
+    )
+    val third = listOf(
+        "",
+        " сто",
+        " двести",
+        " триста",
+        " четыреста",
+        " пятьсот",
+        " шестьсот",
+        " семьсот",
+        " восемьсот",
+        " девятьсот"
+    )
     val thousand = listOf(" тысяча", " тысячи", " тысяч")
     if (n <= 19) result = firstm[n]
-    if (n > 19 && n <= 99) result = second[n / 10] +  firstm[n % 10]
-    if (n / 100_000 != 0) {
-        if((n / 1000) % 10 == 1 && (n / 10_000) % 10 != 1) result = third[n / 100_000] + second[(n / 10_000) % 10] + firstf[1] + thousand[0] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
-        else if((n / 1000) % 10 < 5 && (n / 1000) % 10 !=0 && (n / 10_000) % 10 != 1) result = third[n / 100_000] + second[(n / 10_000) % 10] + firstf[(n / 1000) % 10] + thousand[1] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
-        else if((n / 10_000) % 10 == 1 && (n / 1000) % 10 !=0) result = third[n / 100_000] + firstm[(n / 1000) % 100] + thousand[2] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
-        else result = third[n / 100_000] + second[(n / 10_000) % 10] + firstm[(n / 1000) % 10] + thousand[2] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
-    }
-    else if (n / 10_000 != 0) {
-        if((n / 1000) % 10 == 1 && (n / 10_000) % 10 != 1) result = second[(n / 10_000) % 10] + firstf[1] + thousand[0] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
-        else if((n / 1000) % 10 < 5 && (n / 10_000) % 10 != 1) result = second[(n / 10_000) % 10] + firstf[(n / 1000) % 10] + thousand[1] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
-        else if((n / 10_000) % 10 == 1) result = firstm[(n / 1000) % 100] + thousand[2] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
-        else result = second[(n / 10_000) % 10] + firstm[(n / 1000) % 10] + thousand[2] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
-    }
-    else if (n / 1000 != 0) {
-        if((n / 1000) % 10 == 1) result = firstf[1] + thousand[0] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
-        else if((n / 1000) % 10 < 5) result = firstf[(n / 1000) % 10] + thousand[1] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
-        else result = firstm[(n / 1000) % 10] + thousand[2] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
-    }
-    else if (n / 100 != 0) result = third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
+    else if (n > 19 && n <= 99) result = second[n / 10] + firstm[n % 10]
+    else if (n / 100_000 != 0) {
+        if ((n / 1000) % 10 == 1 && (n / 10_000) % 10 != 1 && (n / 10) % 10 != 1) result =
+            third[n / 100_000] + second[(n / 10_000) % 10] + firstf[1] + thousand[0] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
+        else if ((n / 1000) % 10 < 5 && (n / 1000) % 10 != 0 && (n / 10_000) % 10 != 1 && (n / 10) % 10 != 1) result =
+            third[n / 100_000] + second[(n / 10_000) % 10] + firstf[(n / 1000) % 10] + thousand[1] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
+        else if ((n / 10_000) % 10 == 1 && (n / 1000) % 10 != 0 && (n / 10) % 10 != 1) result =
+            third[n / 100_000] + firstm[(n / 1000) % 100] + thousand[2] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
+        else if ((n / 10) % 10 != 1) result =
+            third[n / 100_000] + second[(n / 10_000) % 10] + firstm[(n / 1000) % 10] + thousand[2] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
+        else if ((n / 1000) % 10 == 1 && (n / 10_000) % 10 != 1) result =
+            third[n / 100_000] + second[(n / 10_000) % 10] + firstf[1] + thousand[0] + third[(n / 100) % 10] + firstm[n % 100]
+        else if ((n / 1000) % 10 < 5 && (n / 1000) % 10 != 0 && (n / 10_000) % 10 != 1) result =
+            third[n / 100_000] + second[(n / 10_000) % 10] + firstf[(n / 1000) % 10] + thousand[1] + third[(n / 100) % 10] + firstm[n % 100]
+        else if ((n / 10_000) % 10 == 1 && (n / 1000) % 10 != 0) result =
+            third[n / 100_000] + firstm[(n / 1000) % 100] + thousand[2] + third[(n / 100) % 10] + firstm[n % 100]
+        else result =
+            third[n / 100_000] + second[(n / 10_000) % 10] + firstm[(n / 1000) % 10] + thousand[2] + third[(n / 100) % 10] + firstm[n % 100]
+    } else if (n / 10_000 != 0) {
+        if ((n / 1000) % 10 == 1 && (n / 10_000) % 10 != 1 && (n / 10) % 10 != 1) result =
+            second[(n / 10_000) % 10] + firstf[1] + thousand[0] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
+        else if ((n / 1000) % 10 < 5 && (n / 10_000) % 10 != 1 && (n / 10) % 10 != 1) result =
+            second[(n / 10_000) % 10] + firstf[(n / 1000) % 10] + thousand[1] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
+        else if ((n / 10_000) % 10 == 1 && (n / 10) % 10 != 1) result =
+            firstm[(n / 1000) % 100] + thousand[2] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
+        else if ((n / 10) % 10 != 1) result =
+            second[(n / 10_000) % 10] + firstm[(n / 1000) % 10] + thousand[2] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
+        else if ((n / 1000) % 10 == 1 && (n / 10_000) % 10 != 1) result =
+            second[(n / 10_000) % 10] + firstf[1] + thousand[0] + third[(n / 100) % 10] + firstm[n % 100]
+        else if ((n / 1000) % 10 < 5 && (n / 10_000) % 10 != 1) result =
+            second[(n / 10_000) % 10] + firstf[(n / 1000) % 10] + thousand[1] + third[(n / 100) % 10] + firstm[n % 100]
+        else if ((n / 10_000) % 10 == 1) result =
+            firstm[(n / 1000) % 100] + thousand[2] + third[(n / 100) % 10] + firstm[n % 100]
+        else result =
+            second[(n / 10_000) % 10] + firstm[(n / 1000) % 10] + thousand[2] + third[(n / 100) % 10] + firstm[n % 100]
+    } else if (n / 1000 != 0) {
+        if ((n / 1000) % 10 == 1 && (n / 10) % 10 != 1) result =
+            firstf[1] + thousand[0] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
+        else if ((n / 1000) % 10 < 5 && (n / 10) % 10 != 1) result =
+            firstf[(n / 1000) % 10] + thousand[1] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
+        else if ((n / 10) % 10 != 1) result =
+            firstm[(n / 1000) % 10] + thousand[2] + third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
+        else if ((n / 1000) % 10 == 1) result = firstf[1] + thousand[0] + third[(n / 100) % 10] + firstm[n % 100]
+        else if ((n / 1000) % 10 < 5) result =
+            firstf[(n / 1000) % 10] + thousand[1] + third[(n / 100) % 10] + firstm[n % 100]
+        else result = firstm[(n / 1000) % 10] + thousand[2] + third[(n / 100) % 10] + firstm[n % 100]
+    } else if (n / 100 != 0 && (n / 10) % 10 != 1) result =
+        third[(n / 100) % 10] + second[(n / 10) % 10] + firstm[n % 10]
+    else result = third[(n / 100) % 10] + firstm[n % 100]
     return result.trim()
 }
