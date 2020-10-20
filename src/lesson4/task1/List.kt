@@ -243,13 +243,26 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  */
 fun roman(n: Int): String {
     var number = n
-    val romanList = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
-    val arabList = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    val pairList = listOf(
+        Pair("M", 1000),
+        Pair("CM", 900),
+        Pair("D", 500),
+        Pair("CD", 400),
+        Pair("C", 100),
+        Pair("XC", 90),
+        Pair("L", 50),
+        Pair("XL", 40),
+        Pair("X", 10),
+        Pair("IX", 9),
+        Pair("V", 5),
+        Pair("IV", 4),
+        Pair("I", 1)
+    )
     var result = ""
-    for (i in arabList.indices) {
-        if (number / arabList[i] == 0) continue
-        for (a in 0 until number / arabList[i]) result += romanList[i]
-        number %= arabList[i]
+    for (i in pairList.indices) {
+        if (number / pairList.map { it.second }[i] == 0) continue
+        for (a in 0 until number / pairList.map { it.second }[i]) result += pairList.map { it.first }[i]
+        number %= pairList.map { it.second }[i]
     }
     return result
 }
@@ -262,7 +275,7 @@ fun roman(n: Int): String {
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    var result = StringBuilder()
+    val result = StringBuilder()
     val firstf = listOf("", " одна", " две", " три", " четыре")
     val firstm = listOf(
         "",
@@ -313,7 +326,6 @@ fun russian(n: Int): String {
     val thousand = listOf(" тысяча", " тысячи", " тысяч")
     if (n / 100_000 != 0) {
         result.append(third[n / 100_000])
-
     }
     if (n / 10_000 != 0) {
         when ((n / 10_000) % 10) {
