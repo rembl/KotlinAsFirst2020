@@ -258,13 +258,13 @@ fun roman(n: Int): String {
         Pair("IV", 4),
         Pair("I", 1)
     )
-    var result = ""
-    for (i in pairList.indices) {
-        if (number / pairList.map { it.second }[i] == 0) continue
-        for (a in 0 until number / pairList.map { it.second }[i]) result += pairList.map { it.first }[i]
-        number %= pairList.map { it.second }[i]
+    val result = StringBuilder()
+    for ((r, a) in pairList) {
+        if (number / a == 0) continue
+        for (i in 0 until number / a) result.append(r)
+        number %= a
     }
-    return result
+    return result.toString()
 }
 
 /**
