@@ -276,7 +276,28 @@ fun roman(n: Int): String {
  */
 fun russian(n: Int): String {
     val result = StringBuilder()
-    val firstf = listOf("", " одна", " две", " три", " четыре")
+    val firstf = listOf(
+        "",
+        " одна",
+        " две",
+        " три",
+        " четыре",
+        " пять",
+        " шесть",
+        " семь",
+        " восемь",
+        " девять",
+        " десять",
+        " одиннадцать",
+        " двенадцать",
+        " тринадцать",
+        " четырнадцать",
+        " пятнадцать",
+        " шестнадцать",
+        " семнадцать",
+        " восемнадцать",
+        " девятнадцать"
+    )
     val firstm = listOf(
         "",
         " один",
@@ -324,38 +345,51 @@ fun russian(n: Int): String {
         " девятьсот"
     )
     val thousand = listOf(" тысяча", " тысячи", " тысяч")
-    if (n / 100_000 != 0) {
-        result.append(third[n / 100_000])
-    }
-    if (n / 10_000 != 0) {
-        when ((n / 10_000) % 10) {
-            1 -> result.append(firstm[(n / 1000) % 100] + thousand[2])
-            in 2..10 -> result.append(second[(n / 10_000) % 10])
-            else -> result.append("")
+    if (n > 999) {
+        val one = n / 1000
+        val two = n % 1000
+        val russianOne = help(one, firstf, second, third)
+        result.append(russianOne)
+        if (one % 100 in 11..15) {
+            result.append(thousand[2])
+        } else {
+            when (one % 10) {
+                1 -> result.append(thousand[0])
+                in 2..5 -> result.append(thousand[1])
+                else -> result.append(thousand[2])
+            }
         }
-        if ((n / 1000) % 10 == 0 && (n / 10_000) % 10 != 1) result.append(thousand[2])
+        val russianTwo = help(two, firstm, second, third)
+        result.append(russianTwo)
     }
-    if (n / 1000 != 0 && (n / 10_000) % 10 != 1) {
-        when ((n / 1000) % 10) {
-            1 -> result.append(firstf[1] + thousand[0])
-            in 2..5 -> result.append(firstf[(n / 1000) % 10] + thousand[1])
-            in 5..10 -> result.append(firstm[(n / 1000) % 10] + thousand[2])
-            else -> result.append("")
-        }
+    if (n in 100..1000) {
+        val hundreds = help(n, firstm, second, third)
+        result.append(hundreds)
     }
-    if (n / 100 != 0) {
-        result.append(third[(n / 100) % 10])
+    if (n in 20..100) {
+        result.append(second[n / 10] + firstm[n % 10])
     }
+    if (n < 20) {
+        result.append(firstm[n])
+    }
+    return result.trim().toString()
+}
+
+fun help(n: Int, first: List<String>, second: List<String>, third: List<String>): StringBuilder {
+    val result = StringBuilder()
+    result.append(third[(n / 100) % 10])
     when ((n / 10) % 10) {
-        1 -> result.append(firstm[n % 100])
+        1 -> result.append(first[n % 100])
         in 2..10 -> result.append(second[(n / 10) % 10])
         else -> result.append("")
     }
     if ((n / 10) % 10 != 1) {
         when (n % 10) {
-            in 1..10 -> result.append(firstm[n % 10])
-            0 -> result.append("")
+            1 -> result.append(first[n % 10])
+            in 2..5 -> result.append(first[n % 10])
+            in 5..10 -> result.append(first[n % 10])
+            else -> result.append("")
         }
     }
-    return result.trim().toString()
+    return result
 }
