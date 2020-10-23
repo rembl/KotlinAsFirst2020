@@ -368,9 +368,8 @@ fun russian(n: Int): String {
 fun help(n: Int, first: List<String>, second: List<String>, third: List<String>): StringBuilder {
     val result = StringBuilder()
     result.append(third[(n / 100) % 10])
-    when ((n / 10) % 10) {
-        1 -> result.append(first[n % 100])
-        else -> result.append(second[(n / 10) % 10] + first[n % 10])
-    }
+    if ((n / 10) % 10 == 1) {
+        result.append(first[n % 100])
+    } else result.append(second[(n / 10) % 10] + first[n % 10])
     return result
 }
