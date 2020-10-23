@@ -347,31 +347,21 @@ fun russian(n: Int): String {
     val thousand = listOf(" тысяча", " тысячи", " тысяч")
     if (n > 999) {
         val one = n / 1000
-        val two = n % 1000
         val russianOne = help(one, firstf, second, third)
         result.append(russianOne)
-        if (one % 100 in 11..15) {
+        if (one % 100 in 11..19) {
             result.append(thousand[2])
         } else {
             when (one % 10) {
                 1 -> result.append(thousand[0])
-                in 2..5 -> result.append(thousand[1])
+                in 2..4 -> result.append(thousand[1])
                 else -> result.append(thousand[2])
             }
         }
-        val russianTwo = help(two, firstm, second, third)
-        result.append(russianTwo)
     }
-    if (n in 100..1000) {
-        val hundreds = help(n, firstm, second, third)
-        result.append(hundreds)
-    }
-    if (n in 20..100) {
-        result.append(second[n / 10] + firstm[n % 10])
-    }
-    if (n < 20) {
-        result.append(firstm[n])
-    }
+    val two = n % 1000
+    val russianTwo = help(two, firstm, second, third)
+    result.append(russianTwo)
     return result.trim().toString()
 }
 
@@ -380,16 +370,7 @@ fun help(n: Int, first: List<String>, second: List<String>, third: List<String>)
     result.append(third[(n / 100) % 10])
     when ((n / 10) % 10) {
         1 -> result.append(first[n % 100])
-        in 2..10 -> result.append(second[(n / 10) % 10])
-        else -> result.append("")
-    }
-    if ((n / 10) % 10 != 1) {
-        when (n % 10) {
-            1 -> result.append(first[n % 10])
-            in 2..5 -> result.append(first[n % 10])
-            in 5..10 -> result.append(first[n % 10])
-            else -> result.append("")
-        }
+        else -> result.append(second[(n / 10) % 10] + first[n % 10])
     }
     return result
 }
