@@ -1,7 +1,10 @@
 @file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence")
 
 package lesson5.task1
-
+/*
+import jdk.nashorn.internal.objects.NativeArray.indexOf
+import org.graalvm.compiler.replacements.amd64.AMD64ArrayIndexOfNode.indexOf
+*/
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -277,7 +280,18 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    var result = Pair(-1, -1)
+    for (n in list) {
+        val other = number - n
+        if (other in list) {
+            result = Pair(list.indexOf(n), list.indexOf(other))
+        }
+        break
+    }
+    return result
+}
+
 
 /**
  * Очень сложная (8 баллов)
