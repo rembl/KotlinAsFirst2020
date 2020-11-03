@@ -1,10 +1,10 @@
 @file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence")
 
 package lesson5.task1
-/*
-import jdk.nashorn.internal.objects.NativeArray.indexOf
-import org.graalvm.compiler.replacements.amd64.AMD64ArrayIndexOfNode.indexOf
-*/
+
+import kotlin.math.max
+
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -261,8 +261,8 @@ fun hasAnagrams(words: List<String>): Boolean = TODO()
  *          "GoodGnome" to setOf()
  *        )
  */
-fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
 
+fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
 /**
  * Сложная (6 баллов)
  *
@@ -314,4 +314,32 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    val result = mutableSetOf<String>()
+    val cost = mutableListOf<Int>()
+    val weight = mutableListOf<Int>()
+    val treasure = mutableListOf<String>()
+    val costAndWeight = Array(treasures.size + 1) { Array(capacity + 1) { 0 } }
+    for ((key, value) in treasures) {
+        cost.add(value.second)
+        weight.add(value.first)
+        treasure.add(key)
+    }
+    for (i in 1..treasures.size) {
+        for (j in 0..capacity) {
+            if (weight[i - 1] > j) costAndWeight[i][j] = costAndWeight[i - 1][j]
+            else costAndWeight[i][j] =
+                max(costAndWeight[i - 1][j], costAndWeight[i - 1][j - weight[i - 1]] + cost[i - 1])
+        }
+    }
+    var a = treasures.size
+    var b = capacity
+    while (a > 0) {
+        if (costAndWeight[a - 1][b] < costAndWeight[a][b]) {
+            result.add(treasure[a - 1])
+            b -= weight[a - 1]
+        }
+        a--
+    }
+    return result.toSet()
+}
