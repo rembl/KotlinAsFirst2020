@@ -2,7 +2,9 @@
 
 package lesson5.task1
 
+import ru.spbstu.wheels.sorted
 import kotlin.math.max
+import kotlin.math.abs
 
 
 // Урок 5: ассоциативные массивы и множества
@@ -263,6 +265,7 @@ fun hasAnagrams(words: List<String>): Boolean = TODO()
  */
 
 fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
+
 /**
  * Сложная (6 баллов)
  *
@@ -281,17 +284,16 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    var result = Pair(-1, -1)
-    for (n in list) {
-        val other = number - n
-        if (other in list) {
-            result = Pair(list.indexOf(n), list.indexOf(other))
-        }
-        break
+    val map = mutableMapOf<Int, Int>()
+    for ((i, j) in list.withIndex()) {
+        map[j] = i
     }
-    return result
+    for ((i, n) in list.withIndex()) {
+        if (map.containsKey(number - n) && i != map[number - n]!!)
+            return Pair(i, map[number - n]!!).sorted()
+    }
+    return Pair(-1, -1)
 }
-
 
 /**
  * Очень сложная (8 баллов)
