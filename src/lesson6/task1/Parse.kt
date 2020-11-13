@@ -196,11 +196,12 @@ fun mostExpensive(description: String): String {
  * Вернуть -1, если roman не является корректным римским числом
  */
 fun fromRoman(roman: String): Int {
-    if (!roman.matches(Regex("""M{0,3}(CM)?D{0,3}(CD)?C{0,3}(XC)?L{0,3}(XL)?X{0,3}(IX)?V{0,3}(IV)?I{0,3}""")))
-        return -1
+    if (!roman.matches(Regex("""M{0,3}(CM)?D{0,3}(CD)?C{0,3}(XC)?L{0,3}(XL)?X{0,3}(IX)?V{0,3}(IV)?I{0,3}"""))
+        || roman.isEmpty()
+    ) return -1
     var result = 0
     val number = roman.split("")
-    for (i in 0 until number.size) {
+    for (i in number.indices) {
         when {
             number[i] == "M" && number[i - 1] != "C" -> result += 1000
             number[i] == "C" && number[i + 1] == "M" -> result += 900
