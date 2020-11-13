@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import java.lang.IndexOutOfBoundsException
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -162,7 +164,25 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    var result = ""
+    var price = -1.0
+    val foodAndPrices = description.split(" ", "; ")
+    try {
+        for (i in 1..foodAndPrices.size step 2) {
+            val id = foodAndPrices[i].toDouble()
+            if (id > price) {
+                price = id
+                result = foodAndPrices[i - 1]
+            }
+        }
+    } catch (e: IndexOutOfBoundsException) {
+        return ""
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+    return result
+}
 
 /**
  * Сложная (6 баллов)
@@ -175,7 +195,30 @@ fun mostExpensive(description: String): String = TODO()
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+fun fromRoman(roman: String): Int {
+    if (!roman.matches(Regex("""M{0,3}(CM)?D{0,3}(CD)?C{0,3}(XC)?L{0,3}(XL)?X{0,3}(IX)?V{0,3}(IV)?I{0,3}""")))
+        return -1
+    var result = 0
+    val number = roman.split("")
+    for (i in 0 until number.size) {
+        when {
+            number[i] == "M" && number[i - 1] != "C" -> result += 1000
+            number[i] == "C" && number[i + 1] == "M" -> result += 900
+            number[i] == "D" && number[i - 1] != "C" -> result += 500
+            number[i] == "C" && number[i + 1] == "D" -> result += 400
+            number[i] == "C" && number[i - 1] != "X" -> result += 100
+            number[i] == "X" && number[i + 1] == "C" -> result += 90
+            number[i] == "L" && number[i - 1] != "X" -> result += 50
+            number[i] == "X" && number[i + 1] == "L" -> result += 40
+            number[i] == "X" && number[i - 1] != "I" -> result += 10
+            number[i] == "I" && number[i + 1] == "X" -> result += 9
+            number[i] == "V" && number[i - 1] != "I" -> result += 5
+            number[i] == "I" && number[i + 1] == "V" -> result += 4
+            number[i] == "I" -> result += 1
+        }
+    }
+    return result
+}
 
 /**
  * Очень сложная (7 баллов)
