@@ -167,7 +167,7 @@ fun firstDuplicateIndex(str: String): Int = TODO()
 fun mostExpensive(description: String): String {
     var result = ""
     var price = -1.0
-    if (!description.matches(Regex("""[А-ЯЁа-яё]{1,} [0-9]{1,}\.?[0-9]{1,};? ?"""))) result = ""
+    if (!description.matches(Regex("""[А-ЯЁа-яё]+ [0-9]+\.?[0-9]+;? ?"""))) result = ""
     val foodAndPrices = description.split(" ", "; ")
     try {
         for (i in 1..foodAndPrices.size step 2) {
@@ -200,24 +200,36 @@ fun fromRoman(roman: String): Int {
     if (!roman.matches(Regex("""M{0,3}(CM)?D{0,3}(CD)?C{0,3}(XC)?L{0,3}(XL)?X{0,3}(IX)?V{0,3}(IV)?I{0,3}"""))
         || roman.isEmpty()
     ) return -1
+    val numbers = listOf(
+        Pair("M", 1000),
+        Pair("CM", 900),
+        Pair("D", 500),
+        Pair("CD", 400),
+        Pair("C", 100),
+        Pair("XC", 90),
+        Pair("L", 50),
+        Pair("XL", 40),
+        Pair("X", 10),
+        Pair("IX", 9),
+        Pair("V", 5),
+        Pair("IV", 4),
+        Pair("I", 1)
+    )
+    val number = roman
     var result = 0
-    val number = roman.split("")
-    for (i in number.indices) {
-        when {
-            number[i] == "M" && number[i - 1] != "C" -> result += 1000
-            number[i] == "C" && number[i + 1] == "M" -> result += 900
-            number[i] == "D" && number[i - 1] != "C" -> result += 500
-            number[i] == "C" && number[i + 1] == "D" -> result += 400
-            number[i] == "C" && number[i - 1] != "X" -> result += 100
-            number[i] == "X" && number[i + 1] == "C" -> result += 90
-            number[i] == "L" && number[i - 1] != "X" -> result += 50
-            number[i] == "X" && number[i + 1] == "L" -> result += 40
-            number[i] == "X" && number[i - 1] != "I" -> result += 10
-            number[i] == "I" && number[i + 1] == "X" -> result += 9
-            number[i] == "V" && number[i - 1] != "I" -> result += 5
-            number[i] == "I" && number[i + 1] == "V" -> result += 4
-            number[i] == "I" -> result += 1
+    var i = 0
+    try {
+        while (number.isNotEmpty() && i in numbers.indices) {
+            val a = numbers[i]
+            if (number.startsWith(a.first)) {
+                result += a.second
+                number.substring(a.first.length)
+            } else i++
         }
+    } catch (e: IndexOutOfBoundsException) {
+        return -1
+    } catch (e: NumberFormatException) {
+        return -1
     }
     return result
 }
