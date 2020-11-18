@@ -215,7 +215,7 @@ fun fromRoman(roman: String): Int {
         Pair("IV", 4),
         Pair("I", 1)
     )
-    val number = roman
+    var number = roman
     var result = 0
     var i = 0
     try {
@@ -223,7 +223,7 @@ fun fromRoman(roman: String): Int {
             val a = numbers[i]
             if (number.startsWith(a.first)) {
                 result += a.second
-                number.substring(a.first.length)
+                number = number.substring(a.first.length)
             } else i++
         }
     } catch (e: IndexOutOfBoundsException) {
