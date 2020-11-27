@@ -452,8 +452,6 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     File(outputName).bufferedWriter().use {
-        it.write(" $lhv | $rhv")
-        it.newLine()
         var compare = "0"
         var excessDigitNumber = digitNumber(lhv)
         while (compare.toInt() < rhv && excessDigitNumber > 0) {
@@ -462,11 +460,19 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         }
         val result = lhv / rhv
         var carry1 = (compare.toInt() / rhv) * rhv
-        it.write(" ".repeat(compare.length - digitNumber(carry1)) + "-$carry1" + " ".repeat(excessDigitNumber + 3) + "$result")
+        val space0 = if (excessDigitNumber == 0 && rhv < lhv) 0 else 1
+        it.write(" ".repeat(space0) + "$lhv | $rhv")
+        it.newLine()
+        it.write("-$carry1" + " ".repeat(excessDigitNumber + 3) + "$result")
         it.newLine()
         it.write("-".repeat(1 + digitNumber(carry1)))
-        it.newLine()
-        while (excessDigitNumber >= 0) {
+
+        if (excessDigitNumber == 0) {
+            val remainder = compare.toInt() - carry1
+            it.newLine()
+            it.write(" ".repeat(compare.length - digitNumber(carry1) + space0) + "$remainder")
+        } else it.newLine()
+        while (excessDigitNumber >= 0 && compare.toInt() != lhv) {
             val compare2 = when (excessDigitNumber) {
                 0 -> (compare.toInt() - carry1).toString()
                 else -> ((compare.toInt() - carry1).toString() + (lhv % 10.0.pow(excessDigitNumber).toInt()) / 10.0.pow(excessDigitNumber - 1).toInt())
