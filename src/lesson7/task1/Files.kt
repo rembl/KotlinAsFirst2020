@@ -469,7 +469,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         if (excessDigitNumber == 0) {
             val remainder = compare.toInt() - carry1
             it.newLine()
-            it.write(" ".repeat(digitNumber(carry1) - 1 + space0) + "$remainder")
+            it.write(" ".repeat(digitNumber(carry1) - digitNumber(remainder) + space0) + "$remainder")
         } else it.newLine()
         while (excessDigitNumber >= 0 && compare.toInt() != lhv) {
             val compare2 = when (excessDigitNumber) {
