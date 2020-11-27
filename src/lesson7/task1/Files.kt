@@ -469,34 +469,51 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         while (excessDigitNumber >= 0) {
             val compare2 = when (excessDigitNumber) {
                 0 -> (compare.toInt() - carry1).toString()
-                else -> ((compare.toInt() - carry1).toString() + (lhv % 10.0.pow(excessDigitNumber)
-                    .toInt()) / 10.0.pow(excessDigitNumber - 1).toInt()).toString()
+                else -> ((compare.toInt() - carry1).toString() + (lhv % 10.0.pow(excessDigitNumber).toInt()) / 10.0.pow(excessDigitNumber - 1).toInt())
             }
             val carry2 = (compare2.toInt() / rhv) * rhv
-            val spaces2 = 1 + digitNumber(lhv / 10.0.pow(excessDigitNumber).toInt()) - digitNumber(compare.toInt() - carry1)
+            val spaces2 =
+                1 + digitNumber(lhv / 10.0.pow(excessDigitNumber).toInt()) - digitNumber(compare.toInt() - carry1)
             it.write(" ".repeat(spaces2) + compare2)
             if (excessDigitNumber == 0) break
             it.newLine()
             val spaces22 = if (compare2.length - digitNumber(carry2) == 0) spaces2 - 1 else spaces2
-            it.write(" ".repeat(spaces22) + "-$carry2")
+            it.write(
+                " ".repeat(
+                    if (digitNumber(carry2) == compare2.length || digitNumber(carry2) == compare2.length -1) spaces22
+                    else spaces22 + compare2.length - digitNumber(carry2) - 1
+                ) + "-$carry2"
+            )
             it.newLine()
-            it.write(" ".repeat(spaces22) + "-".repeat(1 + digitNumber(carry2)))
+            it.write(
+                " ".repeat(spaces22) + "-".repeat(
+                    if (compare2.length == digitNumber(carry2)) 1 + digitNumber(carry2)
+                    else compare2.length))
             it.newLine()
             excessDigitNumber--
             compare = when (excessDigitNumber) {
                 0 -> (compare2.toInt() - carry2).toString()
                 else -> ((compare2.toInt() - carry2).toString() + (lhv % 10.0.pow(excessDigitNumber)
-                    .toInt()) / 10.0.pow(excessDigitNumber - 1).toInt()).toString()
+                    .toInt()) / 10.0.pow(excessDigitNumber - 1).toInt())
             }
             carry1 = (compare.toInt() / rhv) * rhv
-            val spaces1 = 1 + digitNumber(lhv / 10.0.pow(excessDigitNumber).toInt()) - digitNumber(compare2.toInt() - carry2)
+            val spaces1 =
+                1 + digitNumber(lhv / 10.0.pow(excessDigitNumber).toInt()) - digitNumber(compare2.toInt() - carry2)
             it.write(" ".repeat(spaces1) + compare)
             if (excessDigitNumber == 0) break
             it.newLine()
             val spaces11 = if (compare.length - digitNumber(carry1) == 0) spaces1 - 1 else spaces1
-            it.write(" ".repeat(spaces11) + "-$carry1")
+            it.write(
+                " ".repeat(
+                    if (digitNumber(carry1) == compare.length || digitNumber(carry1) == compare.length -1) spaces11
+                    else spaces11 + compare.length - digitNumber(carry1) - 1
+                ) + "-$carry1"
+            )
             it.newLine()
-            it.write(" ".repeat(spaces11) + "-".repeat(1 + digitNumber(carry1)))
+            it.write(
+                " ".repeat(spaces11) + "-".repeat(
+                    if (compare.length == digitNumber(carry1)) 1 + digitNumber(carry1)
+                    else compare.length))
             it.newLine()
             excessDigitNumber--
         }
