@@ -486,7 +486,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
             val spaces22 = if (compare2.length - digitNumber(carry2) == 0) spaces2 - 1 else spaces2
             it.write(
                 " ".repeat(
-                    if (digitNumber(carry2) == compare2.length || digitNumber(carry2) == compare2.length -1) spaces22
+                    if (digitNumber(carry2) == compare2.length || digitNumber(carry2) == compare2.length - 1) spaces22
                     else spaces22 + compare2.length - digitNumber(carry2) - 1
                 ) + "-$carry2"
             )
@@ -511,7 +511,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
             val spaces11 = if (compare.length - digitNumber(carry1) == 0) spaces1 - 1 else spaces1
             it.write(
                 " ".repeat(
-                    if (digitNumber(carry1) == compare.length || digitNumber(carry1) == compare.length -1) spaces11
+                    if (digitNumber(carry1) == compare.length || digitNumber(carry1) == compare.length - 1) spaces11
                     else spaces11 + compare.length - digitNumber(carry1) - 1
                 ) + "-$carry1"
             )
