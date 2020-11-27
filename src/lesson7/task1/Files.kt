@@ -460,7 +460,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         }
         val result = lhv / rhv
         var carry1 = (compare.toInt() / rhv) * rhv
-        val space0 = if (excessDigitNumber == 0 && rhv < lhv) 0 else 1
+        val space0 = if (excessDigitNumber == 0 && digitNumber(rhv) < digitNumber(lhv)) 0 else 1
         it.write(" ".repeat(space0) + "$lhv | $rhv")
         it.newLine()
         it.write("-$carry1" + " ".repeat(excessDigitNumber + 3) + "$result")
