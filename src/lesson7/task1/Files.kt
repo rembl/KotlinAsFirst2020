@@ -496,31 +496,8 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
                     else compare2.length))
             it.newLine()
             excessDigitNumber--
-            compare = when (excessDigitNumber) {
-                0 -> (compare2.toInt() - carry2).toString()
-                else -> ((compare2.toInt() - carry2).toString() + (lhv % 10.0.pow(excessDigitNumber)
-                    .toInt()) / 10.0.pow(excessDigitNumber - 1).toInt())
-            }
-            carry1 = (compare.toInt() / rhv) * rhv
-            val spaces1 =
-                1 + digitNumber(lhv / 10.0.pow(excessDigitNumber).toInt()) - digitNumber(compare2.toInt() - carry2)
-            it.write(" ".repeat(spaces1) + compare)
-            if (excessDigitNumber == 0) break
-            it.newLine()
-            val spaces11 = if (compare.length - digitNumber(carry1) == 0) spaces1 - 1 else spaces1
-            it.write(
-                " ".repeat(
-                    if (digitNumber(carry1) == compare.length || digitNumber(carry1) == compare.length - 1) spaces11
-                    else spaces11 + compare.length - digitNumber(carry1) - 1
-                ) + "-$carry1"
-            )
-            it.newLine()
-            it.write(
-                " ".repeat(spaces11) + "-".repeat(
-                    if (compare.length == digitNumber(carry1)) 1 + digitNumber(carry1)
-                    else compare.length))
-            it.newLine()
-            excessDigitNumber--
+            compare = compare2
+            carry1 = carry2
         }
     }
 }
