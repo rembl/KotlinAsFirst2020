@@ -189,22 +189,6 @@ fun alignFileByWidth(inputName: String, outputName: String) {
 
 
 
-/*for (line in File(inputName).readLines()) {
-            for (word in line.split(Regex("""\s+"""))) lineLength += word.length
-            if (lineLength > maxLineLength) maxLineLength = lineLength
-        }
-        for (line in File(inputName).readLines()) {
-            if (line.isEmpty()) it.newLine()
-            val words = line.split(Regex("""\s+"""))
-            if (words.size == 1) {
-                it.write(words[0])
-                it.newLine()
-            }
-            var currentLineLength = 0
-            for (word in line.split(Regex("""\s+"""))) currentLineLength += word.length
-            while (currentLineLength)
-        }
-         */
 /**
  * Средняя (14 баллов)
  *
@@ -519,13 +503,13 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         val space0 = if (excessDigitNumber == 0 && digitNumber(carry1) + 1 <= digitNumber(lhv)) 0 else 1
         it.write(" ".repeat(space0) + "$lhv | $rhv")
         it.newLine()
-        it.write("-$carry1" + " ".repeat(excessDigitNumber + 3) + "$result")
+        it.write(" ".repeat(space0 - 1 + compare.length - digitNumber(carry1)) + "-$carry1" + " ".repeat(excessDigitNumber + 3) + "$result")
         it.newLine()
-        it.write("-".repeat(1 + digitNumber(carry1)))
+        it.write("-".repeat(if (compare.length == digitNumber(carry1)) 1 + digitNumber(carry1) else compare.length))
         if (excessDigitNumber == 0) {
             val remainder = compare.toInt() - carry1
             it.newLine()
-            it.write(" ".repeat(digitNumber(carry1) - digitNumber(remainder) + space0) + "$remainder")
+            it.write(" ".repeat(space0 + digitNumber(lhv / 10.0.pow(excessDigitNumber).toInt()) - digitNumber(compare.toInt() - carry1)) + "$remainder")
         } else it.newLine()
         while (excessDigitNumber >= 0 && compare.toInt() != lhv) {
             val compare2 = when (excessDigitNumber) {
