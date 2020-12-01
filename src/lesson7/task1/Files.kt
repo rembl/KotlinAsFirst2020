@@ -4,6 +4,8 @@ package lesson7.task1
 
 import lesson3.task1.digitNumber
 import java.io.File
+import java.lang.StringBuilder
+import kotlin.math.max
 import kotlin.math.pow
 
 // Урок 7: работа с файлами
@@ -146,9 +148,63 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    TODO()
+    File(outputName).bufferedWriter().use {
+        var maxLineLength = 0
+        for (line in File(inputName).readLines()) {
+            val chars = line.trim().split(Regex(""))
+            val lineLength = chars.size
+            if (lineLength > maxLineLength) maxLineLength = lineLength
+        }
+        for (line in File(inputName).readLines()) {
+            if (line.isEmpty()) {
+                it.newLine()
+                continue
+            }
+            val words = line.trim().split(Regex("""\s+"""))
+            if (words.size == 1) {
+                it.write(words[0])
+                it.newLine()
+                continue
+            } else {
+                val chars = line.trim().split(Regex(""))
+                var currentLineLength = chars.size
+                val myLine = StringBuilder(line.trim())
+                val spaceQuantity = words.size - 1
+                var spaceNumber = 0
+                var spaceIndex = words[0].length
+                while (currentLineLength < maxLineLength) {
+                    myLine.insert(spaceIndex, " ")
+                    spaceNumber++
+                    spaceIndex =
+                        if (spaceNumber % spaceQuantity == 0) words[0].length
+                        else spaceIndex + words[spaceNumber % spaceQuantity].length + spaceNumber / spaceQuantity + 2
+                    currentLineLength++
+                }
+                it.write(myLine.toString())
+                it.newLine()
+            }
+        }
+    }
 }
 
+
+
+/*for (line in File(inputName).readLines()) {
+            for (word in line.split(Regex("""\s+"""))) lineLength += word.length
+            if (lineLength > maxLineLength) maxLineLength = lineLength
+        }
+        for (line in File(inputName).readLines()) {
+            if (line.isEmpty()) it.newLine()
+            val words = line.split(Regex("""\s+"""))
+            if (words.size == 1) {
+                it.write(words[0])
+                it.newLine()
+            }
+            var currentLineLength = 0
+            for (word in line.split(Regex("""\s+"""))) currentLineLength += word.length
+            while (currentLineLength)
+        }
+         */
 /**
  * Средняя (14 баллов)
  *
