@@ -171,7 +171,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
                 val myLine = StringBuilder(line.trim())
                 val spaceQuantity = words.size - 1
                 var spaceNumber = 0
-                var spaceIndex = words[0].length
+                var spaceIndex = words[0].length + 1
                 while (currentLineLength < maxLineLength) {
                     myLine.insert(spaceIndex, " ")
                     spaceNumber++
