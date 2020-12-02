@@ -172,7 +172,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
                 val spaceQuantity = words.size - 1
                 var spaceNumber = 0
                 var spaceIndex = words[0].length + 1
-                while (currentLineLength < maxLineLength) {
+                while (currentLineLength != maxLineLength) {
                     myLine.insert(spaceIndex, " ")
                     spaceNumber++
                     spaceIndex =
@@ -500,7 +500,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         }
         val result = lhv / rhv
         var carry1 = (compare.toInt() / rhv) * rhv
-        val space0 = if (excessDigitNumber == 0 && digitNumber(carry1) + 1 <= digitNumber(lhv)) 0 else 1
+        val space0 = if (digitNumber(carry1) + 1 <= compare.length) 0 else 1
         it.write(" ".repeat(space0) + "$lhv | $rhv")
         it.newLine()
         it.write(" ".repeat(space0 - 1 + compare.length - digitNumber(carry1)) + "-$carry1" + " ".repeat(excessDigitNumber + 3) + "$result")
@@ -518,7 +518,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
             }
             val carry2 = (compare2.toInt() / rhv) * rhv
             val spaces2 =
-                1 + digitNumber(lhv / 10.0.pow(excessDigitNumber).toInt()) - digitNumber(compare.toInt() - carry1)
+                space0 + digitNumber(lhv / 10.0.pow(excessDigitNumber).toInt()) - digitNumber(compare.toInt() - carry1)
             it.write(" ".repeat(spaces2) + compare2)
             if (excessDigitNumber == 0) break
             it.newLine()
