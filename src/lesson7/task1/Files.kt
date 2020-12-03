@@ -151,7 +151,10 @@ fun alignFileByWidth(inputName: String, outputName: String) {
     File(outputName).bufferedWriter().use {
         var max = 0
         for (line in File(inputName).readLines()) {
-            val length = line.trim().length
+            val words = line.trim().split(Regex("""\s+"""))
+            var length = 0
+            for (word in words) length += word.length
+            length += words.size - 1
             if (length > max) max = length
         }
         for (line in File(inputName).readLines()) {
@@ -166,7 +169,9 @@ fun alignFileByWidth(inputName: String, outputName: String) {
                 continue
             } else {
                 val spaceNumber = words.size - 1
-                val current = line.trim().length
+                var current = 0
+                for (word in words) current += word.length
+                current += words.size - 1
                 val spaceDiff = max - current
                 val full = spaceDiff / spaceNumber
                 val add = spaceDiff % spaceNumber
