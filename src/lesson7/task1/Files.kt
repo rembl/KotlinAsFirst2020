@@ -165,12 +165,6 @@ fun alignFileByWidth(inputName: String, outputName: String) {
                 it.newLine()
                 continue
             } else {
-                val space = Regex("""\s+""")
-                val spaces0 = space.findAll(line.trim()).toList()
-                val spaces = mutableListOf<String>()
-                for (i in spaces0) {
-                    spaces.add(i.value)
-                }
                 val spaceNumber = words.size - 1
                 val current = line.trim().length
                 val spaceDiff = max - current
@@ -178,8 +172,8 @@ fun alignFileByWidth(inputName: String, outputName: String) {
                 val add = spaceDiff % spaceNumber
                 for (i in 0 until words.size - 1) {
                     it.write(words[i])
-                    if (i > add - 1) it.write(" ".repeat(full + spaces[i].length))
-                    else it.write(" ".repeat(full + spaces[i].length + 1))
+                    if (i > add - 1) it.write(" ".repeat(full + 1))
+                    else it.write(" ".repeat(full + 2))
                 }
                 it.write(words.last())
                 it.newLine()
