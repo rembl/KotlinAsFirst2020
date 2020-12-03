@@ -149,11 +149,10 @@ fun centerFile(inputName: String, outputName: String) {
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
     File(outputName).bufferedWriter().use {
-        var maxLineLength = 0
+        var max = 0
         for (line in File(inputName).readLines()) {
-            val chars = line.trim().split(Regex(""))
-            val lineLength = chars.size
-            if (lineLength > maxLineLength) maxLineLength = lineLength
+            val length = line.trim().length
+            if (length > max) max = length
         }
         for (line in File(inputName).readLines()) {
             if (line.isEmpty()) {
@@ -166,28 +165,22 @@ fun alignFileByWidth(inputName: String, outputName: String) {
                 it.newLine()
                 continue
             } else {
-                val chars = line.trim().split(Regex(""))
-                var currentLineLength = chars.size
-                val myLine = StringBuilder(line.trim())
-                val spaceQuantity = words.size - 1
-                var spaceNumber = 0
-                var spaceIndex = words[0].length
-                while (currentLineLength != maxLineLength) {
-                    myLine.insert(spaceIndex, " ")
-                    spaceNumber++
-                    spaceIndex =
-                        if (spaceNumber % spaceQuantity == 0) words[0].length + (spaceNumber / spaceQuantity)
-                        else spaceIndex + words[spaceNumber % spaceQuantity].length + (spaceNumber / spaceQuantity) + 2
-                    currentLineLength++
+                val spaceNumber = words.size - 1
+                val current = line.trim().length
+                val spaceDiff = max - current
+                val full = spaceDiff / spaceNumber
+                val add = spaceDiff % spaceNumber
+                for (i in 0 until words.size - 1) {
+                    it.write(words[i])
+                    if (i > add - 1) it.write(" ".repeat(full + 1))
+                    else it.write(" ".repeat(full + 2))
                 }
-                it.write(myLine.toString())
+                it.write(words.last())
                 it.newLine()
             }
         }
     }
 }
-
-
 
 /**
  * Средняя (14 баллов)
