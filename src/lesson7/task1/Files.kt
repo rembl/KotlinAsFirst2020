@@ -150,8 +150,9 @@ fun centerFile(inputName: String, outputName: String) {
 fun alignFileByWidth(inputName: String, outputName: String) {
     File(outputName).bufferedWriter().use {
         var max = 0
+        val regex = Regex("""\s+""")
         for (line in File(inputName).readLines()) {
-            val words = line.trim().split(Regex("""\s+"""))
+            val words = line.trim().split(regex)
             var length = 0
             for (word in words) length += word.length
             length += words.size - 1
@@ -162,7 +163,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
                 it.newLine()
                 continue
             }
-            val words = line.trim().split(Regex("""\s+"""))
+            val words = line.trim().split(regex)
             if (words.size == 1) {
                 it.write(words[0])
                 it.newLine()
